@@ -3,29 +3,86 @@
 @{
     ViewData["Title"] = "Home Page";
 }
+<style>
+    table {
+        border-collapse: collapse;
+        width: 100%;
+    }
 
+    thead {
+        border: 1px solid #000;
+    }
 
-<table>
+    tr {
+        border: 1px solid #000;
+    }
+
+    th, td {
+        padding: 30px;
+        text-align: center;
+    }
+
+    #dolb {
+        font-weight: bold;
+    }
+
+    .libra h1 {
+        margin: 20px;
+        }
+
+    .bg {
+        background-image: url("/Images/beg.jpg");
+        background-size: cover;
+        background-position: center;
+        filter: blur(8px);
+        -webkit-filter: blur(8px);
+        width: 100%;
+        height: 100vh;
+        position:fixed;
+        top: 0;
+        left: 1px;
+        right: 1px;
+        z-index: -1;
+    }
+
+</style>
+
+<div class="libra">
+<h1 style="color: white">Movie Library</h1>
+<br />
+</div>
+<div class="bg"></div>
+<table class="table table-hover">
     <thead>
-        <tr>
-            <th>ID</th>
+        <tr class="table-dark">
             <th>Name</th>
-            <th>Rating</th>
             <th>Release Year</th>
             <th>Genre</th>
         </tr>
     </thead>
+
     <tbody>
         @foreach (var movie in Model)
         {
-            <tr>
-                <td>@movie.Id</td>
-                <td ><a href = "/movies/getmovie/@movie.Id" > @movie.Name </a></td>
-                <td>@movie.Rating</td>
+            <tr data-href=" /movies/getmovie/@movie.Id">
+                <td id="dolb">@movie.Name</td>
                 <td>@movie.ReleaseYear</td>
                 <td>@movie.Genre</td>
             </tr>
         }
     </tbody>
+
 </table>
 
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const rows = document.querySelectorAll("tr[data-href]");
+
+        rows.forEach(row => {
+            row.addEventListener("click", () => {
+                window.location.href = row.dataset.href;
+            });
+        });
+    });
+
+</script>
